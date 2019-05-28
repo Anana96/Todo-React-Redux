@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css?family=Forum|Jura');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+html,body{
+  margin:0;
+  padding:0;
+  font-family: 'Forum', cursive;
+  font-family: 'Source Sans Pro', sans-serif;
+  height: 100%;
+  width: 100%;
+  background: #333333;
+}
+.container{
+    width: 60%;
+    min-height: 100vh;
+    margin: auto;
+    background: #dcdcdc;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  text-align: center;
+  width: 30%;
+  position: relative;
+  top: 30vh;
+  margin: auto;
+  background: gainsboro;
+  padding-bottom: 40px;
+  box-shadow: 3px -5px 12px 0px black;
+  border-radius: 30px;
+}
+
+
+.input-form-login{
+  width: 100%;
+    font-family: Source Sans Pro,sans-serif;
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+h1{
+  text-align: center;
+  color: #505050;
+}
+.menu{
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: row wrap;
+    justify-content: center;
+}
+
+
+.menu-bar{
+  padding: 10px;
+  flex-basis: 600px;
+  background: #c5c5c5;
+  font-size: 20px;
+  color: #505050;
+  /* border: 1px solid #fff; */
+  outline: none;
+  text-decoration: none;
+  text-align: center;
+}
+
+.container-events{
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  flex-flow: row wrap;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.container-events img{
+  min-width:200px;
+  height: 300px;
+}
+
+.event{
+  flex-basis: 600px;
+  margin-bottom: 40px;
+  background: #524e4e38;
+  color: #464444;
+}
+
+.event a{
+  text-decoration: none;
+  outline: none;
+  color: #464444;
+}
+
+
+.event a:hover{
+  color: #000;
+}
+
+.container-event{
+  text-align: center;
+  padding: 10px;
+}
+
+.button-back{
+  margin-left: 20px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
