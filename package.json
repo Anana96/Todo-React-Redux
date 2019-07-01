@@ -31,13 +31,15 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "path": "^0.12.7",
     "postcss-loader": "^3.0.0",
+    "react-redux-spinner": "^2.0.0",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "tar": ">=2.2.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.3.1",
-    "tar": ">=2.2.2"
+    "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

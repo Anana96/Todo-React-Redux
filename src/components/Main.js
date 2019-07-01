@@ -1,11 +1,12 @@
 import React from "react";
 import Menu from "./Menu";
 import { connect } from "react-redux";
+import {getUser}from "../selectors"
 
 
 let mapStateToProps = state => {
   return {
-    login: state.user.login
+    user: getUser(state)
   };
 };
 
@@ -14,7 +15,7 @@ let mapStateToProps = state => {
       return (
         <div className="container">
           <Menu/>
-          <h1>Welcome {this.props.login}</h1>
+          <h1>Welcome {this.props.user.name}</h1>
         </div>
       );
     }

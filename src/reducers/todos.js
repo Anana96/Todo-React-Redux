@@ -1,9 +1,45 @@
-export const todos = (state = {list:[]}, action) => {
+import {DELETE_TODO_REQUEST} from '../actions'
+
+
+export const todos = (state = {list:[], todo:null}, action) => {
   switch (action.type) {
-    case 'GET_ALL_TODOS':
-      return {list: action.todos}
+    case 'GET_ALL_TODOS_REQUEST':
+      return {...state, isLoading:true}
+    case 'GET_ALL_TODOS_SUCCESS':
+      return {...state, list: action.todos, isLoading: false}
     case 'GET_ALL_TODOS_FAILURE':
-      return {list:[], error:action.error}
+      return {...state, list:[], error: action.error, isLoading: false}
+    case 'GET_TODO_BY_ID_REQUEST':
+        return {...state, isLoading:true}
+    case 'GET_TODO_BY_ID_SUCCESS':
+        return {...state, todo: action.todo, isLoading: false}
+    case 'GET_TODO_BY_ID_FAILURE':
+        return {...state,error: action.error, isLoading: false}
+    case 'ADD_TODO_REQUEST':
+        return {...state, sumbititing: true}
+    case 'ADD_TODO_SUCCESS':
+        return {...state, list:[...state.list, action.todo], sumbititing: false}
+    case 'ADD_TODO_FAILURE':
+        return {...state, error: action.error, sumbititing: false}
+    case 'DELETE_TODO_REQUEST':
+      return {...state, isLoading:true}
+    case 'DELETE_TODO_SUCCESS':{
+      let newList = [...state.list];
+      newList = newList.filter(todo => todo.id != action.id);
+      return {...state, list:newList, isLoading: false}
+    }
+    case 'DELETE_TODO_FAILURE':
+        return {...state, error: action.error, isLoading: false}
+    case 'UPDATE_TODO_REQUEST':
+      return {...state, isLoading:true}
+    case 'UPDATE_TODO_SUCCESS':{
+        let newList = [...state.list];
+        newList[action.id].title = action.todo.title;
+        newList[action.id].description = action.todo.description;
+        return {...state, list:newList, isLoading: false}
+    }
+    case 'UPDATE_TODO_FAILURE':
+        return {...state, error: action.error, isLoading: false}
     default:
       return state;
   }

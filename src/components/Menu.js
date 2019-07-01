@@ -2,10 +2,12 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import { connect } from "react-redux";
 import {logout} from "../actions"
+import {getUser}from "../selectors"
+
 
 let mapStateToProps = state => {
   return {
-    login: state.user.login
+    user: getUser(state)
   };
 };
 
@@ -20,8 +22,8 @@ class Menu extends React.Component {
       return (
         <div className = "menu">
           <Link to='/' className="menu-bar">Homepage</Link>
-          <Link to='/todo' className="menu-bar">Todo</Link>
-          <button onClick={() => {this.props.logout()}} className="logout-button"><span className="login">{this.props.login} </span>Log Out</button>
+          <Link to='/todos' className="menu-bar">Todo</Link>
+          <button onClick={() => {this.props.logout()}} className="logout-button"><span className="login">{this.props.user.name} </span>Log Out</button>
         </div>
       );
     }

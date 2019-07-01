@@ -7,8 +7,10 @@ html,body{
   font-family: 'Source Sans Pro', sans-serif;
   height: 100%;
   width: 100%;
-  background: #333333;
+  background: #41575e6b;
 }
+
+
 .container{
     width: 60%;
     min-height: 100vh;
@@ -27,7 +29,6 @@ html,body{
   margin: auto;
   background: gainsboro;
   padding-bottom: 40px;
-  box-shadow: 3px -5px 12px 0px black;
   border-radius: 30px;
 }
 
@@ -40,6 +41,7 @@ html,body{
 }
 
 h1{
+  margin:0;
   text-align: center;
   color: #505050;
 }
@@ -69,7 +71,8 @@ h1{
   justify-content: space-around;
   flex-flow: row wrap;
   text-align: center;
-  padding-bottom: 50px;
+  padding-top: 30px;
+  padding-bottom:10px;
 }
 
 .container-events img{
@@ -78,7 +81,7 @@ h1{
 }
 
 .event{
-  flex-basis: 600px;
+  flex-basis: 200px;
   margin-bottom: 40px;
   background: #524e4e38;
   color: #464444;
@@ -106,4 +109,11 @@ h1{
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+.form-add-todo{
+  width: 100%;
+  padding-bottom: 40px;
+  text-align: center;
+  background: darkseagreen;
 }

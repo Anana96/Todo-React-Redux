@@ -4,6 +4,7 @@ import { Redirect } from 'react-router'
 import { connect } from "react-redux";
 import * as yup from "yup"
 import {fetchLogin} from "../actions"
+import {getExistUser,getErrorUser,getSubmiting} from "../selectors/index"
 import "../style/form-style.scss"
 
 
@@ -19,8 +20,9 @@ const loginValidation = yup.object().shape({
 
  const  mapStateToProps = state => {
     return {
-      user: state.user.set,
-      error: state.user.error
+      user: getExistUser(state),
+      error: getErrorUser(state),
+      sumbititing: getSubmiting(state)
     };
   };
 
@@ -29,10 +31,6 @@ const loginValidation = yup.object().shape({
 
  class Login extends React.Component{
     render(){
-        console.log(this.props.user);
-        if(this.props.error){
-            console.log(this.props.error);
-        }
         if(this.props.user){
           return (<Redirect to="/"/>);
         }
@@ -41,12 +39,13 @@ const loginValidation = yup.object().shape({
               <h1>Login</h1>
               <Formik   
                 initialValues={{ login: '', password: '' }}
-                onSubmit={(value) => {
-                    this.props.fetchLogin(value);
+                onSubmit={(value, {setSubmitting}) => {
+                  this.props.fetchLogin(value);
+                  setSubmitting(this.props.setSubmitting);
                }}
               validationSchema={loginValidation}
               render = {({
-                touched,
+                touched = touched,
                 errors,
                 values,
                 handleChange,
@@ -61,10 +60,11 @@ const loginValidation = yup.object().shape({
                   <Field type="password" name="password" placeholder="password"   value = {values.password} onChange={handleChange} onBlur={handleBlur} className={ errors.password && touched.password ? 'text-input error' : 'text-input'}/>
                   <div className="input-feedback">{errors.password}</div>
                   <div>
+              
                   {error && (
                   <div className="input-feedback">{error}</div>)}
                     <button type="button" className="outline button-form" onClick={handleReset}> Reset</button>
-                    <button type="submit" className="button-form"> Submit </button>
+                    <button type="submit" className="button-form" disabled={this.props.sumbititing}> Submit </button>
                   </div>
                   </Form>
               )}
