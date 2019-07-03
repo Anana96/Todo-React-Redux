@@ -2,14 +2,12 @@ import React from "react"
 import { connect } from "react-redux"
 import {Link} from 'react-router-dom';
 import Menu from "./Menu"
-import {fetchGetTodos,addTodo, deleteTodo} from "../actions"
-import {getTodos,getErrorTodos,getIsLoadingTodos,getSubmitingTodo, getUser} from "../selectors"
-import { Form, Field, Formik } from "formik"
-import * as yup from "yup"
+import {fetchGetTodos, deleteTodo} from "../actions"
+import {getTodos,getErrorTodos,getIsLoadingTodos, getUserRole} from "../selectors"
+
 
   const mapDispatchToProps = {
       getTodos:fetchGetTodos,
-      addTodo,
       deleteTodo
   };
   
@@ -18,67 +16,9 @@ import * as yup from "yup"
       todos: getTodos(state),
       error: getErrorTodos(state),
       isLoading: getIsLoadingTodos(state),
-      submitting: getSubmitingTodo(state),
-      user: getUser(state)
+      role: getUserRole(state)
     };
   };
-
-  const addTodoValidation = yup.object().shape({
-    title: yup.string()
-      .required('Загаловок не введен'),
-    description: yup.string()
-      .required('Описание не введено')
-  });
-
-
-
-
-  class FormTodo extends React.Component{
-    render(){
-      return( 
-          <div className="form-add-todo">
-            <h1>Add todo:</h1>
-            <Formik   
-              initialValues={{ title: this.props.title, description: this.props.description }}
-              onSubmit={(value,actions) => {
-                  this.props.addTodo(value);
-                  console.log(actions);
-                  actions.setSubmitting(this.props.submitting);
-                  actions.resetForm();
-            }}
-            validationSchema={addTodoValidation}
-            render = {({
-              touched,
-              errors,
-              values,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              handleReset,
-              error = this.props.error
-            })  => (
-                <Form onSubmit={handleSubmit}>
-                <Field  type="text" name="title"  value = {values.title} onChange={handleChange} onBlur={handleBlur} className={ errors.title && touched.title ? 'text-input error' : 'text-input'}/>
-                <div className="input-feedback">{errors.title}</div>
-                <Field  component="textarea" rows="5" col="5" name="description" value = {values.description} onChange={handleChange} onBlur={handleBlur} className={ errors.description && touched.description ? 'text-input error' : 'text-input'}/>
-                <div className="input-feedback">{errors.description}</div>
-                <div>
-                {error && (
-                <div className="input-feedback">{error}</div>)}
-                  <button type="button" className="outline button-form" onClick={handleReset}> Reset</button>
-                  <button type="submit" className="button-form" disabled={this.props.submitting}> Submit </button>
-                </div>
-                </Form>
-            )}
-             />
-            </div>
-        )
-    }
-}
-
-
-  const WrapperFormTodo = connect(mapStateToProps,mapDispatchToProps)(FormTodo);
-
 
   class Todos extends React.Component
   {
@@ -91,6 +31,7 @@ import * as yup from "yup"
       return (
         <div className="container">
           <Menu/>
+          <Link to = '/addTodo/'><button className='add-button'>Add new todo</button></Link>
           <h1>All todos:</h1>
           <div className="container-events">
                 { isLoading? <p>Loading...</p>:
@@ -106,10 +47,10 @@ import * as yup from "yup"
                         </h3>
                         <p>Описание: {todo.description}</p>
                         <p>Создан: {todo.createdBy}</p>
-                        { this.props.user.role === todo.createdBy || this.props.user.role === 'admin' ?
+                        { this.props.role === todo.createdBy || this.props.role === 'admin' ?
                          <div>
-                           <button onClick = {() => {this.props.deleteTodo(todo.id)}}>Удалить</button>
-                           <button onClick = {() => {console.log(todo.id)}}>Редактировать</button>
+                           <Link to={`/updateTodo/${todo.id}`}><button className="button-todo update-todo">Редактировать</button></Link>
+                           <button onClick = {() => {this.props.deleteTodo(todo.id)}} className="button-todo delete-todo">Удалить</button> 
                          </div>:''
                         }
                       </div>
@@ -117,7 +58,7 @@ import * as yup from "yup"
                     }):''
                 }
           </div>
-          <WrapperFormTodo title='няка' description ='пошла гулять'/>
+      
         </div>
       )
     }

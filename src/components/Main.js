@@ -1,21 +1,24 @@
 import React from "react";
 import Menu from "./Menu";
 import { connect } from "react-redux";
-import {getUser}from "../selectors"
+import {getUserName, getUserRole}from "../selectors"
 
 
-let mapStateToProps = state => {
+const mapStateToProps = state => {
   return {
-    user: getUser(state)
+    name: getUserName(state),
+    role: getUserRole(state)
   };
 };
 
  class Main extends React.Component {
     render() {
+      let {name,role} = this.props;
       return (
-        <div className="container">
+        <div className="container main">
           <Menu/>
-          <h1>Welcome {this.props.user.name}</h1>
+          <h1>Welcome {name}</h1>
+          <h2>Role of user: {role}</h2>
         </div>
       );
     }

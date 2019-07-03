@@ -8,6 +8,9 @@ import {WrapperTodos} from "./AllTodos"
 import {WrapperLogin} from "./Login"
 import ErrorBoundary from "./ErrorBoundary"
 import {WrapperTodo} from "./Todo";
+import {getExistUser} from '../selectors'
+import { WrapperAllUsers } from "./AllUsers";
+import { WrapperFormTodo } from "./FormTodo";
 
 const PrivateRoute = ({component:Component, loggedIn, ...rest}) => {
   return(
@@ -22,29 +25,24 @@ const PrivateRoute = ({component:Component, loggedIn, ...rest}) => {
 
 const mapStateToProps = state =>{
     return {
-        user: state.user.set
+        user: getExistUser(state)
     }
 }
 
-
-const NotFound = () =>
-  <div className="container">
-    <h3>404 page not found</h3>
-  </div>
 
 class App extends React.Component {
     render(){
       return (
               <Router>
-               <Switch>
                 <ErrorBoundary>
                   <Route path='/login' component={WrapperLogin}/> 
                   <PrivateRoute exact path='/' component={WrapperMain} loggedIn={this.props.user}/>
                   <PrivateRoute exact path='/todos' component={WrapperTodos} loggedIn={this.props.user}/>
                   <PrivateRoute path='/todos/:id' component={WrapperTodo} loggedIn={this.props.user}/>
-                  {/* <Route component={NotFound} /> */}
+                  <PrivateRoute path='/users' component = {WrapperAllUsers} loggedIn={this.props.user}/>
+                  <PrivateRoute path='/addTodo' component = {WrapperFormTodo} loggedIn={this.props.user}/>
+                  <PrivateRoute path='/updateTodo/:id' component = {WrapperFormTodo} loggedIn={this.props.user}/>
                 </ErrorBoundary>
-                </Switch>
               </Router> 
 
       )

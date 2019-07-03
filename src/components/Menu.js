@@ -2,12 +2,13 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import { connect } from "react-redux";
 import {logout} from "../actions"
-import {getUser}from "../selectors"
+import { getUserName, getUserRole}from "../selectors"
 
 
 let mapStateToProps = state => {
   return {
-    user: getUser(state)
+    name: getUserName(state),
+    role: getUserRole(state)
   };
 };
 
@@ -15,15 +16,17 @@ const mapDispatchToProps = dispatch => {
     return {
         logout: () => dispatch(logout())
     }
-};
+}
 
 class Menu extends React.Component {
     render() {
+      let {name,role} = this.props;
       return (
         <div className = "menu">
           <Link to='/' className="menu-bar">Homepage</Link>
           <Link to='/todos' className="menu-bar">Todo</Link>
-          <button onClick={() => {this.props.logout()}} className="logout-button"><span className="login">{this.props.user.name} </span>Log Out</button>
+          {role === 'admin'? <Link to='/users' className="menu-bar">Users</Link>: ''}
+          <button onClick={() => {this.props.logout()}} className="logout-button"><span className="login">{name} </span>Log Out</button>
         </div>
       );
     }

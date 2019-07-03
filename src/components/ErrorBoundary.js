@@ -14,7 +14,7 @@ export default class ErrorBoundary extends React.Component {
           <div className="container">
             <h1>Технические неполадки.Зайдите позже.</h1>;
           </div>
-          );
+          )
       }
       return this.props.children; 
     }
