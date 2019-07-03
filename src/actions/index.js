@@ -1,5 +1,6 @@
 import userService from '../service.js'
-import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT,
+import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
+    LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE,
     ABOUT_USER_REQUEST, ABOUT_USER_SUCCESS, ABOUT_USER_FAILURE,
     ALL_USERS_REQUEST, ALL_USERS_SUCCESS, ALL_USERS_FAILURE,
     GET_ALL_TODOS_REQUEST, GET_ALL_TODOS_SUCCESS, GET_ALL_TODOS_FAILURE,
@@ -14,18 +15,29 @@ const actionCreateSuccess = (type, payload) => ({type,payload})
 const actionCreateFailure = (type, error) => ({type,error})
 
 
-const login = (data) => async dispatch => {
+const login = (data, meta) => async dispatch => {
     let url = `http://localhost:3000/api/v1/login`;
     dispatch(actionCreateRequest(LOGIN_REQUEST));
     userService.post(url, data).then(() =>{
-         dispatch(actionCreateSuccess(LOGIN_SUCCESS))})
+         dispatch(actionCreateSuccess(LOGIN_SUCCESS))
+         meta.setSubmitting(false);
+    })
     .catch(error => {
         console.log(error);
         dispatch(actionCreateFailure(LOGIN_FAILURE,'Такого пользователя нет'))
+        meta.setSubmitting(false);
     });
 }
 
-const logout = () => ({type: LOGOUT})
+const logout = () => async dispatch => {
+    let url = `http://localhost:3000/api/v1/logout`;
+    dispatch(actionCreateRequest(LOGOUT_REQUEST));
+    await userService.post(url).then(() => dispatch(actionCreateSuccess(LOGOUT_SUCCESS)))
+    .catch(error => {
+        console.log(error);
+        dispatch(actionCreateFailure(LOGOUT_FAILURE,error.toString()));
+    })
+}
 
 const aboutUser = () => async dispatch => {
      let url = `http://localhost:3000/api/v1/me`;
@@ -68,13 +80,17 @@ const fetchGetTodoById = (id) => async dispatch => {
     })
 }
 
-const addTodo = (todo) => async dispatch => {
+const addTodo = (todo, meta) => async dispatch => {
     let url = `http://localhost:3000/api/v1/todos`;
     dispatch(actionCreateRequest(ADD_TODO_REQUEST));
-    userService.post(url, todo).then(todo => dispatch(actionCreateSuccess(ADD_TODO_SUCCESS,{todo})))
+    userService.post(url, todo).then(todo => {
+        dispatch(actionCreateSuccess(ADD_TODO_SUCCESS,{todo}))
+        meta.setSubmitting(false);
+    })
     .catch(error => {
         console.log(error);
-        dispatch(actionCreateFailure(ADD_TODO_FAILURE,'Todo не может быть создано'))
+        dispatch(actionCreateFailure(ADD_TODO_FAILURE,'Todo не может быть создано'));
+        meta.setSubmitting(false);
     });
 }
 
@@ -88,14 +104,18 @@ const deleteTodo = (id) => async dispatch => {
     })
 }
 
-const updateTodo = (id, todo) => async dispatch => {
+const updateTodo = (id, todo, meta) => async dispatch => {
     let url = `http://localhost:3000/api/v1/todos/${id}`;
     id = Number(id);
     dispatch(actionCreateRequest(UPDATE_TODO_REQUEST));
-    await userService.put(url, todo).then(() => dispatch(actionCreateSuccess(UPDATE_TODO_SUCCESS, {id,todo})))
+    await userService.put(url, todo).then(() => {
+        dispatch(actionCreateSuccess(UPDATE_TODO_SUCCESS, {id,todo}))
+        meta.setSubmitting(false);
+    })
     .catch(error => {
         console.log(error);
-        dispatch(actionCreateFailure(UPDATE_TODO_FAILURE,'Todo не может быть изменено'))
+        dispatch(actionCreateFailure(UPDATE_TODO_FAILURE,'Todo не может быть изменено'));
+        meta.setSubmitting(false);
     });
 }
 

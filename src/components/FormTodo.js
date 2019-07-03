@@ -60,14 +60,13 @@ class FormTodo extends React.Component{
             <Formik   
               enableReinitialize={true}
               initialValues={{ title: initTitle, description: initDesctiption }}
-              onSubmit={(value,actions) => {
-                  console.log(value);
-                  todo && id ? this.props.updateTodo(id, value):this.props.addTodo(value);
-                  actions.setSubmitting(isLoading);
+              onSubmit={(value,{setSubmitting}) => {
+                  setSubmitting(true);
+                  todo && id ? this.props.updateTodo(id, value, {setSubmitting}):this.props.addTodo(value, {setSubmitting});
               }}
               validationSchema={TodoValidation}
               render = {({touched,errors,values,handleChange,
-                          handleBlur,handleSubmit,handleReset
+                          handleBlur,handleSubmit,handleReset,isSubmitting
               })  => (
                 <Form onSubmit={handleSubmit}>
                 <Field  type="text" name="title"  value = {values.title} onChange={handleChange} onBlur={handleBlur} className={ errors.title && touched.title ? 'text-input error' : 'text-input'}/>
@@ -75,7 +74,7 @@ class FormTodo extends React.Component{
                 <Field  component="textarea" rows="5" col="5" name="description" value = {values.description} onChange={handleChange} onBlur={handleBlur} className={ errors.description && touched.description ? 'text-input error' : 'text-input'}/>
                 <div className="input-feedback">{errors.description}</div>
                 <button type="button" className="outline button-form" onClick={handleReset}> Reset</button>
-                <button type="submit" className="button-form" disabled={isLoading}> Submit </button>
+                <button type="submit" className="button-form" disabled={isSubmitting}> Submit </button>
                 </Form>
               )}
              />

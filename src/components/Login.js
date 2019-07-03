@@ -36,15 +36,14 @@ const loginValidation = yup.object().shape({
           return (<Redirect to="/"/>);
         if(this.props.user && !this.props.isLoading)
           this.props.aboutUser();
-
         return( 
             <div className="form">
               <h1>Login</h1>
               <Formik   
                 initialValues={{ login: '', password: '' }}
                 onSubmit={(value, {setSubmitting}) => {
-                  this.props.login(value);
-                  setSubmitting(this.props.isLoading);
+                  setSubmitting(true);
+                  this.props.login(value, {setSubmitting});
                }}
               validationSchema={loginValidation}
               render = {({
@@ -55,6 +54,7 @@ const loginValidation = yup.object().shape({
                 handleBlur,
                 handleSubmit,
                 handleReset,
+                isSubmitting,
                 error = this.props.error
               })  => (
                   <Form onSubmit={handleSubmit}>
@@ -67,7 +67,7 @@ const loginValidation = yup.object().shape({
                   {error && (
                   <div className="input-feedback">{error}</div>)}
                     <button type="button" className="outline button-form" onClick={handleReset}> Reset</button>
-                    <button type="submit" className="button-form" disabled={this.props.isLoading}> Submit </button>
+                    <button type="submit" className="button-form" disabled={isSubmitting}> Submit </button>
                   </div>
                   </Form>
               )}

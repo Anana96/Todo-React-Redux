@@ -31,7 +31,9 @@ const post = async (url, data) => {
         console.log(response);
         if (!response.ok)
             throw new Error(response.statusText);
-        return await response.json();
+        if(response.text)
+            return await response.json();
+        return;
     }
     catch (error) {
         throw error;
@@ -51,9 +53,9 @@ const del = async (url) => {
         console.log(response);
         if (!response.ok)
             throw new Error(response.statusText);
-        if(response.status === 204)
-            return;
-        return await response.json();
+        if(response.text)
+            return await response.json();
+        return;
     }
     catch (error) {
         throw error;
@@ -75,9 +77,9 @@ const put = async (url, data) => {
         console.log(response);
         if (!response.ok)
             throw new Error(response.statusText);
-        if(response.status === 204)
-            return;
-        return await response.json();
+        if(response.text)
+            return await response.json();
+        return;
     }
     catch (error) {
         throw error;

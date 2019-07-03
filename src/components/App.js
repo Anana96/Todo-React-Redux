@@ -11,6 +11,7 @@ import {WrapperTodo} from "./Todo";
 import {getExistUser} from '../selectors'
 import { WrapperAllUsers } from "./AllUsers";
 import { WrapperFormTodo } from "./FormTodo";
+import {aboutUser} from '../actions'
 
 const PrivateRoute = ({component:Component, loggedIn, ...rest}) => {
   return(
@@ -29,8 +30,13 @@ const mapStateToProps = state =>{
     }
 }
 
+const mapDispatchToProps = {aboutUser};
+
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.aboutUser();
+  }
     render(){
       return (
               <Router>
@@ -49,4 +55,4 @@ class App extends React.Component {
     }
 }
 
-export const WrapperApp = connect(mapStateToProps)(App);
+export const WrapperApp = connect(mapStateToProps,mapDispatchToProps)(App);
