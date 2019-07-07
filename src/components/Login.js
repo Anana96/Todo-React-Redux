@@ -3,7 +3,7 @@ import { Form, Field, Formik } from "formik"
 import { Redirect } from 'react-router'
 import { connect } from "react-redux";
 import * as yup from "yup"
-import {login,aboutUser} from "../actions"
+import {login,aboutUser} from "../actions/user"
 import {getExistUser,getErrorUser,getLoadingUser, getUserRole} from "../selectors/index"
 import "../style/form-style.scss"
 

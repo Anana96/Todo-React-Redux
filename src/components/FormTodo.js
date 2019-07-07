@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import { Redirect } from 'react-router'
 import * as yup from "yup"
 import { getErrorTodos, getTodo, getResultOperation, getIsLoadingTodos} from "../selectors";
-import {updateTodo, addTodo,fetchGetTodoById} from "../actions"
+import {updateTodo, addTodo,fetchGetTodoById} from "../actions/todos"
 import Menu from "./Menu"
 
 const TodoValidation = yup.object().shape({

@@ -1,7 +1,7 @@
 import Menu from './Menu'
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchGetTodoById } from '../actions'
+import { fetchGetTodoById } from '../actions/todos'
 import { getTodo,getErrorTodos,getIsLoadingTodos} from '../selectors'
 
 

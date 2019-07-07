@@ -1,38 +1,22 @@
-const get = async (url) => {
+const request  = async (method, url, content = null) => {
+    let data = {
+        method: method,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    };
+    if(content)
+        data.body = JSON.stringify(content);
     try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
-        });
-        if (!response.ok)
-            throw new Error(response.statusText);
-        return await response.json();
-    }
-    catch (error) {
-        throw error;
-    }
-}
-
-const post = async (url, data) => {
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify(data)
-        });
+        const response = await fetch(url,data);
         console.log(response);
         if (!response.ok)
             throw new Error(response.statusText);
-        if(response.text)
-            return await response.json();
+        let responseBody = await response.text();
+        if(responseBody)
+            return JSON.parse(responseBody);
         return;
     }
     catch (error) {
@@ -40,51 +24,22 @@ const post = async (url, data) => {
     }
 }
 
-const del = async (url) => {
-    try {
-        const response = await fetch(url, {
-            method: 'DELETE',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
-        });
-        console.log(response);
-        if (!response.ok)
-            throw new Error(response.statusText);
-        if(response.text)
-            return await response.json();
-        return;
-    }
-    catch (error) {
-        throw error;
-    }
+const get = (url) => {
+    return request('GET', url);
 }
 
-
-const put = async (url, data) => {
-    try {
-        const response = await fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify(data)
-        });
-        console.log(response);
-        if (!response.ok)
-            throw new Error(response.statusText);
-        if(response.text)
-            return await response.json();
-        return;
-    }
-    catch (error) {
-        throw error;
-    }
+const post = (url, content) => {
+    return request('POST', url, content);
 }
 
-const userService = {get, post, del, put};
+const put = (url, content) => {
+    return request('PUT', url, content);
+}
+
+const del = (url) => {
+    return request('DELETE', url);
+}
+
+const userService = {get, post, put, del};
 export default userService;
+

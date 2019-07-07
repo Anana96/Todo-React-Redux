@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import Menu from "./Menu"
-import {allUsers} from "../actions"
+import {allUsers} from "../actions/user"
 import {getUsers, getLoadingUser, getErrorUser} from "../selectors"
 
 

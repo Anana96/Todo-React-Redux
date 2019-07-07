@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import {Link} from 'react-router-dom';
 import Menu from "./Menu"
-import {fetchGetTodos, deleteTodo} from "../actions"
+import {fetchGetTodos, deleteTodo} from "../actions/todos"
 import {getTodos,getErrorTodos,getIsLoadingTodos, getUserRole} from "../selectors"
 
 
@@ -20,6 +20,25 @@ import {getTodos,getErrorTodos,getIsLoadingTodos, getUserRole} from "../selector
     };
   };
 
+  const RenderTodo = (props) => {
+     let {todo, role, deleteTodo} = props;
+     console.log(todo,role);
+     return (
+      <div className ="event" >
+        <h3><Link to = {`/todos/${todo.id}`} >{todo.title}</Link></h3>
+        <p>Описание: {todo.description}</p>
+        <p>Создан: {todo.createdBy}</p>
+        { role === todo.createdBy || role === 'admin' ?
+          <div>
+            <Link to={`/updateTodo/${todo.id}`}><button className="button-todo update-todo">Редактировать</button></Link>
+            <button onClick = {() => {deleteTodo(todo.id)}} className="button-todo delete-todo">Удалить</button> 
+          </div>:''
+        }
+      </div>
+     );
+}
+
+
   class Todos extends React.Component
   {
     componentDidMount() {
@@ -27,7 +46,7 @@ import {getTodos,getErrorTodos,getIsLoadingTodos, getUserRole} from "../selector
     }
     
     render() {
-      let {todos,error, isLoading} = this.props;
+      let {todos,error, isLoading,role} = this.props;
       return (
         <div className="container">
           <Menu/>
@@ -38,27 +57,10 @@ import {getTodos,getErrorTodos,getIsLoadingTodos, getUserRole} from "../selector
                   error?
                   <h2> {error} </h2>
                   :
-                  todos? 
-                  todos.map(todo => {
-                    return(   
-                      <div className ="event" key={todo.id}>
-                        <h3>
-                        <Link to = {`/todos/${todo.id}`} >{todo.title}</Link>
-                        </h3>
-                        <p>Описание: {todo.description}</p>
-                        <p>Создан: {todo.createdBy}</p>
-                        { this.props.role === todo.createdBy || this.props.role === 'admin' ?
-                         <div>
-                           <Link to={`/updateTodo/${todo.id}`}><button className="button-todo update-todo">Редактировать</button></Link>
-                           <button onClick = {() => {this.props.deleteTodo(todo.id)}} className="button-todo delete-todo">Удалить</button> 
-                         </div>:''
-                        }
-                      </div>
-                      );
-                    }):''
+                  todos &&
+                  todos.map(todo => <RenderTodo todo = {todo} role={role} deleteTodo={this.props.deleteTodo} key={todo.id} />)
                 }
           </div>
-      
         </div>
       )
     }

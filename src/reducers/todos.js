@@ -29,23 +29,22 @@ export const todos = (state = {list:[], todo:null}, action) => {
     case DELETE_TODO_REQUEST:
       return {...state,error:'', isLoading:true}
     case DELETE_TODO_SUCCESS:{
-      let newList = [...state.list];
-      newList = newList.filter(todo => todo.id != action.payload.id);
-      return {...state, list:newList, isLoading: false}
+      state.list = state.list.filter(todo => todo.id != action.payload.id);
+      return {...state, isLoading: false}
     }
     case DELETE_TODO_FAILURE:
         return {...state, error: action.error, isLoading: false}
     case UPDATE_TODO_REQUEST:
       return {...state,error:'', isLoading:true}
     case UPDATE_TODO_SUCCESS:{
-        let newList = [...state.list].map( todo => {
+        state.list = state.list.map( todo => {
           if(todo.id === action.payload.id){
             todo.title = action.payload.todo.title;
             todo.description = action.payload.todo.description;
           }
           return todo;
-        })
-        return {...state, list : newList, isLoading: false, success:true}
+        });
+        return {...state, isLoading: false, success:true}
     }
     case UPDATE_TODO_FAILURE:
         return {...state, error: action.error, isLoading: false}

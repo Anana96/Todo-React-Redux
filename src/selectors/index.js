@@ -1,15 +1,13 @@
-const getExistUser = state => state.user.set;
-const getUserName = state => state.user.name;
-const getUserRole = state => state.user.role;
-const getErrorUser = state => state.user.error;
-const getLoadingUser = state => state.user.isLoading;
-const getUsers = state => state.user.users;
+export const getExistUser = state => state.user.set;
+export const getUserName = state => state.user.name;
+export const getUserRole = state => state.user.role;
+export const getErrorUser = state => state.user.error;
+export const getLoadingUser = state => state.user.isLoading;
+export const getUsers = state => state.user.users;
  
-const getTodos = state => state.todos.list;
-const getErrorTodos = state => state.todos.error;
-const getIsLoadingTodos = state => state.todos.isLoading;
-const getTodo = state => state.todos.todo;
-const getResultOperation = state => state.todos.success;
+export const getTodos = state => state.todos.list;
+export const getErrorTodos = state => state.todos.error;
+export const getIsLoadingTodos = state => state.todos.isLoading;
+export const getTodo = state => state.todos.todo;
+export const getResultOperation = state => state.todos.success;
 
-export {getExistUser,getUserName,getUserRole, getErrorUser,getLoadingUser, getUsers, getTodos, getErrorTodos, getIsLoadingTodos,
-        getTodo, getResultOperation}

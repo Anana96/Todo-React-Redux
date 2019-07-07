@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import { connect } from "react-redux";
-import {logout} from "../actions"
+import {logout} from "../actions/user"
 import { getUserName, getUserRole}from "../selectors"
 
 
@@ -23,7 +23,7 @@ class Menu extends React.Component {
           <Link to='/' className="menu-bar">Homepage</Link>
           <Link to='/todos' className="menu-bar">Todos</Link>
           {role === 'admin'? <Link to='/users' className="menu-bar">Users</Link>: ''}
-          <button onClick={() => {this.props.logout()}} className="logout-button"><span className="login">{name} </span>Log Out</button>
+          <button onClick={this.props.logout} className="logout-button"><span className="login">{name} </span>Log Out</button>
         </div>
       );
     }

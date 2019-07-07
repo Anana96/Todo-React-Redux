@@ -4,14 +4,14 @@ import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
   LOGOUT_REQUEST, LOGOUT_SUCCESS,LOGOUT_FAILURE} from '../actions/actionsTypes'
 
 
-export const user = (state = {set:false, error:''}, action) => {
+export const user = (state = {set:null, error:''}, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
-      return {...state, isLoading: true}
+      return { isLoading: true}
     case LOGIN_SUCCESS:
       return {set:true, isLoading: false}
     case LOGIN_FAILURE:
-      return {...state, error: action.error,isLoading: false}
+      return {...state, set:false, error: action.error,isLoading: false}
     case LOGOUT_REQUEST:
       return {...state,error:'', isLoading:true}
     case LOGOUT_SUCCESS:
@@ -23,7 +23,7 @@ export const user = (state = {set:false, error:''}, action) => {
     case ABOUT_USER_SUCCESS:
         return {...state,set:true, name: action.payload.name, role: action.payload.role, isLoading: false}
     case ABOUT_USER_FAILURE:
-        return {...state,isLoading: false}  
+        return {...state,set:false, isLoading: false, error:action.error}  
     case ALL_USERS_REQUEST:
         return {...state, isLoading: true}
     case ALL_USERS_SUCCESS:
