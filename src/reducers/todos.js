@@ -35,7 +35,7 @@ export const todos = (state = {list:[], todo:null}, action) => {
     case DELETE_TODO_FAILURE:
         return {...state, error: action.error, isLoading: false}
     case UPDATE_TODO_REQUEST:
-      return {...state,error:'', isLoading:true}
+      return {...state,error: '', isLoading:true}
     case UPDATE_TODO_SUCCESS:{
         state.list = state.list.map( todo => {
           if(todo.id === action.payload.id){

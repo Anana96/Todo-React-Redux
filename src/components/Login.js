@@ -32,10 +32,11 @@ const loginValidation = yup.object().shape({
 
  class Login extends React.Component{
     render(){
-        if(this.props.role)
+        let {user,role,isLoading,aboutUser, login} = this.props;
+        if(role)
           return (<Redirect to="/"/>);
-        if(this.props.user && !this.props.isLoading)
-          this.props.aboutUser();
+        if(user && !isLoading)
+          aboutUser();
         return( 
             <div className="form">
               <h1>Login</h1>
@@ -43,7 +44,7 @@ const loginValidation = yup.object().shape({
                 initialValues={{ login: '', password: '' }}
                 onSubmit={(value, {setSubmitting}) => {
                   setSubmitting(true);
-                  this.props.login(value, {setSubmitting});
+                  login(value, {setSubmitting});
                }}
               validationSchema={loginValidation}
               render = {({

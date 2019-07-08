@@ -13,7 +13,7 @@ export const user = (state = {set:null, error:''}, action) => {
     case LOGIN_FAILURE:
       return {...state, set:false, error: action.error,isLoading: false}
     case LOGOUT_REQUEST:
-      return {...state,error:'', isLoading:true}
+      return {...state, error:'', isLoading:true}
     case LOGOUT_SUCCESS:
       return {...state, set:false, role:'',name:'', isLoading:false}
     case LOGOUT_FAILURE:
@@ -21,9 +21,9 @@ export const user = (state = {set:null, error:''}, action) => {
     case ABOUT_USER_REQUEST:
         return {...state, isLoading: true}
     case ABOUT_USER_SUCCESS:
-        return {...state,set:true, name: action.payload.name, role: action.payload.role, isLoading: false}
+        return {...state, set:true, name: action.payload.name, role: action.payload.role, isLoading: false}
     case ABOUT_USER_FAILURE:
-        return {...state,set:false, isLoading: false, error:action.error}  
+        return {...state, set:false, isLoading: false}  
     case ALL_USERS_REQUEST:
         return {...state, isLoading: true}
     case ALL_USERS_SUCCESS:

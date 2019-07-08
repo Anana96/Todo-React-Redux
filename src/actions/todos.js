@@ -13,7 +13,7 @@ const fetchGetTodos = () => async dispatch => {
     await userService.get(url).then(todos => dispatch(actionCreateSuccess(GET_ALL_TODOS_SUCCESS, {todos})))
     .catch(error => {
         console.error(error);
-        dispatch(actionCreateFailure(GET_ALL_TODOS_FAILURE,'Todos не могут быть получены'));
+        dispatch(actionCreateFailure(GET_ALL_TODOS_FAILURE,null,'Todos не могут быть получены'));
     })
 } 
 
@@ -23,7 +23,7 @@ const fetchGetTodoById = (id) => async dispatch => {
    await userService.get(url).then(todo => dispatch(actionCreateSuccess(GET_TODO_BY_ID_SUCCESS,{todo})))
    .catch(error => {
        console.error(error);
-       dispatch(actionCreateFailure(GET_TODO_BY_ID_FAILURE,'Todo не найдено'));
+       dispatch(actionCreateFailure(GET_TODO_BY_ID_FAILURE, null,'Todo не найдено'));
    })
 }
 
@@ -36,7 +36,7 @@ const addTodo = (todo, meta) => async dispatch => {
    })
    .catch(error => {
        console.error(error);
-       dispatch(actionCreateFailure(ADD_TODO_FAILURE,'Todo не может быть создано'));
+       dispatch(actionCreateFailure(ADD_TODO_FAILURE,null, 'Todo не может быть создано'));
        meta.setSubmitting(false);
    });
 }
@@ -44,10 +44,10 @@ const addTodo = (todo, meta) => async dispatch => {
 const deleteTodo = (id) => async dispatch => {
    let url = `http://localhost:3000/api/v1/todos/${id}`;
    dispatch(actionCreateRequest(DELETE_TODO_REQUEST));
-   await userService.del(url).then(() => dispatch(actionCreateSuccess(DELETE_TODO_SUCCESS,{id})))
+   await userService.del(url).then(() => dispatch(actionCreateSuccess(DELETE_TODO_SUCCESS, {id})))
    .catch(error => {
        console.error(error);
-       dispatch(actionCreateFailure(DELETE_TODO_FAILURE,error.toString()));
+       dispatch(actionCreateFailure(DELETE_TODO_FAILURE, null, error.toString()));
    })
 }
 
@@ -56,12 +56,12 @@ const updateTodo = (id, todo, meta) => async dispatch => {
    id = Number(id);
    dispatch(actionCreateRequest(UPDATE_TODO_REQUEST));
    await userService.put(url,todo).then(() => {
-       dispatch(actionCreateSuccess(UPDATE_TODO_SUCCESS, {id,todo}))
+       dispatch(actionCreateSuccess(UPDATE_TODO_SUCCESS,{id,todo}))
        meta.setSubmitting(false);
    })
    .catch(error => {
        console.error(error);
-       dispatch(actionCreateFailure(UPDATE_TODO_FAILURE,'Todo не может быть изменено'));
+       dispatch(actionCreateFailure(UPDATE_TODO_FAILURE, null, 'Todo не может быть изменено'));
        meta.setSubmitting(false);
    });
 }

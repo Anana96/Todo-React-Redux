@@ -14,7 +14,7 @@ const login = (data, meta) => async dispatch => {
     })
     .catch(error => {
         console.log(error);
-        dispatch(actionCreateFailure(LOGIN_FAILURE,'Такого пользователя нет'))
+        dispatch(actionCreateFailure(LOGIN_FAILURE, null,  'Такого пользователя нет'))
         meta.setSubmitting(false);
     });
 }
@@ -25,7 +25,7 @@ const logout = () => async dispatch => {
     await userService.post(url).then(() => dispatch(actionCreateSuccess(LOGOUT_SUCCESS)))
     .catch(error => {
         console.log(error);
-        dispatch(actionCreateFailure(LOGOUT_FAILURE,error.toString()));
+        dispatch(actionCreateFailure(LOGOUT_FAILURE, null, error.toString()));
     })
 }
 
@@ -37,7 +37,7 @@ const aboutUser = (meta) => async dispatch => {
      })
      .catch(error => {
          console.log(error);
-         dispatch(actionCreateFailure(ABOUT_USER_FAILURE,error.toString()));
+         dispatch(actionCreateFailure(ABOUT_USER_FAILURE, null, error.toString()));
      })
 }
 
@@ -47,7 +47,7 @@ const allUsers = () => async dispatch => {
     await userService.get(url).then(users => dispatch(actionCreateSuccess(ALL_USERS_SUCCESS, {users})))
     .catch(error => {
         console.log(error);
-        dispatch(actionCreateFailure(ALL_USERS_FAILURE,error.toString()));
+        dispatch(actionCreateFailure(ALL_USERS_FAILURE,null, error.toString()));
     })
 }
 
